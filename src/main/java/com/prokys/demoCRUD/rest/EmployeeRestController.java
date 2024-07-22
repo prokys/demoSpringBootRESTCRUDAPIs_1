@@ -1,12 +1,8 @@
 package com.prokys.demoCRUD.rest;
 
-import com.prokys.demoCRUD.dao.EmployeeDAO;
 import com.prokys.demoCRUD.entity.Employee;
 import com.prokys.demoCRUD.service.EmployeeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +30,17 @@ public class EmployeeRestController {
             throw new RuntimeException("Employee not found - "+employeeId);
         }
         return theEmployee;
+    }
+
+    @PostMapping("/employees")
+    public Employee addEmployee(@RequestBody Employee theEmployee){
+
+        // set id to 0 to make sure its saved as new item
+        theEmployee.setId(0);
+
+        Employee employee = employeeService.save(theEmployee);
+
+        return employee;
     }
 
 }
