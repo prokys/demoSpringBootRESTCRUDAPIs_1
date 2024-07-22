@@ -3,7 +3,6 @@ package com.prokys.demoCRUD.service;
 import com.prokys.demoCRUD.dao.EmployeeRepository;
 import com.prokys.demoCRUD.entity.Employee;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,12 +34,11 @@ public class EmployeeServiceImpl implements EmployeeService{
 
         return theEmployee;
     }
-    @Transactional
     @Override
     public Employee save(Employee theEmployee) {
         return employeeRepository.save(theEmployee);
     }
-    @Transactional
+
     @Override
     public void deleteByID(int theId) {
         employeeRepository.deleteById(theId);
