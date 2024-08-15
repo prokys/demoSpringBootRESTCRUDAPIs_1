@@ -51,7 +51,7 @@ public class EmployeeController {
         return "redirect:/employees/list";
     }
 
-    @GetMapping("showFormForUpdate")
+    @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("employeeId") int theId, Model theModel){
 
         // get the employee from service
@@ -61,7 +61,17 @@ public class EmployeeController {
         theModel.addAttribute("employee", theEmployee);
 
         // send over to our form
-        return "employees/employee-form";
+        return "redirect:employees/employee-form";
     }
 
+    @GetMapping("/delete")
+    public String delete(@RequestParam("employeeId") int theId){
+
+        //delete employee
+        employeeService.deleteByID(theId);
+
+        //redirect to employees-list
+        return "redirect:/employees/list";
+
+    }
 }
