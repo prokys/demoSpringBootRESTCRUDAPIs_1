@@ -2,12 +2,10 @@ package com.prokys.demoCRUD.controller;
 
 import com.prokys.demoCRUD.entity.Employee;
 import com.prokys.demoCRUD.service.EmployeeService;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,12 +15,12 @@ public class EmployeeController {
 
     private EmployeeService employeeService;
 
-    public EmployeeController (EmployeeService theEmployeeService){
+    public EmployeeController(EmployeeService theEmployeeService) {
         employeeService = theEmployeeService;
     }
 
     @GetMapping("/list")
-    public String listEmployees(Model theModel){
+    public String listEmployees(Model theModel) {
 
         //get employees from database
         List<Employee> theEmployees = employeeService.findAll();
@@ -34,7 +32,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/showFormForAdd")
-        public String showFormForAdd(Model theModel){
+    public String showFormForAdd(Model theModel) {
 
         //create model attribute to bind form data
         Employee theEmployee = new Employee();
@@ -45,12 +43,25 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee){
+    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
 
         //save employee
         employeeService.save(theEmployee);
 
         return "redirect:/employees/list";
+    }
+
+    @GetMapping("showFormForUpdate")
+    public String showFormForUpdate(@RequestParam("employeeId") int theId, Model theModel){
+
+        // get the employee from service
+        Employee theEmployee = employeeService.findById(theId);
+
+        // set employee in the model to prepopulate form
+        theModel.addAttribute("employee", theEmployee);
+
+        // send over to our form
+        return "employees/employee-form";
     }
 
 }
