@@ -61,7 +61,7 @@ public class EmployeeController {
         theModel.addAttribute("employee", theEmployee);
 
         // send over to our form
-        return "redirect:employees/employee-form";
+        return "employees/employee-form";
     }
 
     @GetMapping("/delete")
