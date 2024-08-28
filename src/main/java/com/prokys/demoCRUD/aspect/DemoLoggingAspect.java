@@ -1,6 +1,7 @@
 package com.prokys.demoCRUD.aspect;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -43,6 +44,18 @@ public class DemoLoggingAspect {
             logger.info("====>>>>argument: " + arg);
         }
 
+    }
+
+    @AfterReturning(pointcut = "forAppFlow()", returning = "result")
+    public void after(JoinPoint joinPoint, Object result){
+
+        //display method we are returning from
+
+        String method = joinPoint.getSignature().toShortString();
+        logger.info("====>>>> in @AfterReturning from the method: " + method);
+
+        //display data that was returned
+        logger.info("====>>>>result: " + result);
     }
 
 }
